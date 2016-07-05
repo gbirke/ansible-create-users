@@ -1,0 +1,16 @@
+---
+# Example playbook that shows how to create users from the generated vault file
+- hosts: all
+  tasks:
+      - name: Load passwords from vault
+        include_vars: user_passwords.yml
+
+      - name: Create users
+        user: name="{{item.key}}" password="{{item.value}}" shell="/bin/bash" update_password=on_create
+        with_dict: "{{ user_passwords }}"
+        register: user_results
+
+      - name: Force password renewal for newly created users
+        command: chage -d 0 {{item.item.key}} # item.item is the key/value pair from the dict in the previous task
+        when: "{{item.changed == true}}"
+        with_items: "{{ user_results.results }}"
