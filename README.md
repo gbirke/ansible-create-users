@@ -1,10 +1,10 @@
-# Securely create user users with Ansible
+# Securely create multiple users with Ansible
 
  This Python script and Ansible playbook help you to create several user accounts on different servers, give each user a secure password and force the user to change the password on first login.
 
 The Python script `generate_user_passwords.py` creates a YAML dictionary of user names and SHA512-hashed passwords that can be used in an Ansible Playbook.
 
-The Ansible playbook users.yml demonstrates how to use the generated user dictionary.
+The Ansible playbook `users.yml` demonstrates how to use the generated user dictionary.
 
 ## Installation
 
@@ -19,7 +19,7 @@ The Passlib library can be installed with
 ## Generate a list of user names and passwords
 Use the provided Python script `generate_user_passwords.py` to generate a dictionary of user names and secure passwords. There are several ways to specify the user names.
 
-### User names as Parameters
+### User names as parameters
 
     python generate_user_passwords.py alice bob carol dan
 
@@ -66,7 +66,9 @@ You can store the output in a file like this:
 
     python generate_user_passwords.py alice bob carol > user_passwords.yml
 
-If you want to store the output and are concerned that the passwords are shown in plain text comments, you can encrypt the file with the `ansible-vault` command:
+### Securing the output file
+
+The point of the Python script and the playbook is to generate a username and password file that is **only temporary, located on your deployment machine!** If you need to put the generated file into version control or store it for longer periods of time, you should encrypt the file with the [`ansible-vault`](http://docs.ansible.com/ansible/playbooks_vault.html) command:
 
     python generate_user_passwords.py alice bob carol | ansible-vault encrypt > user_passwords.yml
 
