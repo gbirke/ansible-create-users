@@ -1,5 +1,5 @@
 ---
-# Example playbook that shows how to create users from the generated vault file
+# Example playbook that shows how to create users from the generated ansible variable file
 - hosts: all
   tasks:
       - name: Load passwords from vault
