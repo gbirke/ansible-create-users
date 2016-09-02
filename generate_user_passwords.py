@@ -10,7 +10,10 @@ from passlib.hash import sha512_crypt
 
 YAML_PARENT_VARIABLE = 'user_passwords'
 DEFAULT_PASSWORD_LENGTH = 12
-ALLOWED_PASSWORD_CHARS = string.ascii_letters + string.digits + '!@#$%^&*()'
+# Unambigous chars
+ALLOWED_PASSWORD_CHARS = 'abcdefghkmnoprstwxzABCDEFGHJKLMNPQRTWXY3468'
+# More secure chars, but harder to type
+# ALLOWED_PASSWORD_CHARS = string.ascii_letters + string.digits + '!@$%^&*+=/'
 
 def generate_pw( length ):
     rnd = random.SystemRandom()
